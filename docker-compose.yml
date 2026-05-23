@@ -1,0 +1,38 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: pixelwave_db
+    restart: unless-stopped
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: ali
+      POSTGRES_USER: ali
+      POSTGRES_PASSWORD: ali
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ali -d ali"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  app:
+    profiles: ["prod"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pixelwave_app
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: "postgresql://ali:ali@db:5432/ali?schema=public"
+      NODE_ENV: production
+    ports:
+      - "3000:3000"
+
+volumes:
+  pg_data:
+    name: pixelwave_pg_data
