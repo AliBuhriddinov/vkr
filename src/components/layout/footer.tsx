@@ -65,11 +65,10 @@ export function Footer() {
       </div>
 
       <div className="border-t border-border">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-2 px-6 py-5 text-xs text-muted-foreground sm:flex-row">
+        <div className="mx-auto flex max-w-7xl items-center justify-center px-6 py-5 text-xs text-muted-foreground">
           <span>
             © {year} PixelWave. {tf("rights")}
           </span>
-          
         </div>
       </div>
     </footer>
