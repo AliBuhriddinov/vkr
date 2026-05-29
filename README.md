@@ -122,9 +122,3 @@ docker compose --profile prod up --build
 ## Лицензия
 
 Проект распространяется под лицензией [MIT](./LICENSE).
-
-
-
-
-
-
