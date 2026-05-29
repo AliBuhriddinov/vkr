@@ -44,7 +44,7 @@ next-env.d.ts
 # prisma generated client
 /src/generated/
 
-# methodology references — local only, not part of source
+# local documentation
 /docs/
 
 # local screenshot output
