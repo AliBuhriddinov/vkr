@@ -47,6 +47,9 @@ next-env.d.ts
 # methodology references — local only, not part of source
 /docs/
 
+# local screenshot output
+/screenshots/
+
 # IDE
 /.idea/
 /.vscode/

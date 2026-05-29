@@ -1,0 +1,147 @@
+{
+  "nav": {
+    "services": "Services",
+    "cases": "Cases",
+    "process": "Process",
+    "about": "About",
+    "contacts": "Contacts",
+    "cta": "Start a project"
+  },
+  "theme": {
+    "toggle": "Toggle theme"
+  },
+  "locale": {
+    "switch": "Change language",
+    "ru": "Русский",
+    "en": "English"
+  },
+  "hero": {
+    "badge": "accepting new projects",
+    "eyebrow": "Full-cycle digital agency",
+    "titleMain": "Websites and products that",
+    "titleAccent": "bring you clients",
+    "lead": "We design, build and maintain web and mobile products for business. From idea to launch and support — one team owns the result.",
+    "ctaPrimary": "Start a project",
+    "ctaSecondary": "View cases",
+    "riskReducer": "We reply within 1 business day · NDA on request · no obligations",
+    "stats": {
+      "projects": "projects delivered",
+      "years": "years on the market",
+      "specialists": "specialists",
+      "nps": "loyalty index"
+    },
+    "visual": {
+      "metric": "Lead conversion",
+      "growth": "growth per quarter",
+      "requests": "New requests",
+      "live": "in real time"
+    }
+  },
+  "services": {
+    "eyebrow": "01 — Services",
+    "title": "What we do",
+    "lead": "Full-cycle digital services — from launching a product to growing it.",
+    "more": "Learn more"
+  },
+  "process": {
+    "eyebrow": "02 — Process",
+    "title": "How we work",
+    "lead": "A transparent four-step process: you always know which stage the project is at.",
+    "steps": [
+      {
+        "title": "Brief & audit",
+        "text": "We study the task, goals and audience. Analyse competitors and lock the requirements."
+      },
+      {
+        "title": "Prototype & estimate",
+        "text": "We design the structure and interfaces, agree on scope and a transparent estimate."
+      },
+      {
+        "title": "Development",
+        "text": "We build in sprints with regular demos. You see progress at every step."
+      },
+      {
+        "title": "Launch & support",
+        "text": "We deploy, test and maintain. We keep growing the product after release."
+      }
+    ]
+  },
+  "cases": {
+    "eyebrow": "03 — Cases",
+    "title": "Selected work",
+    "lead": "A few projects we're proud of.",
+    "view": "Open case"
+  },
+  "testimonials": {
+    "eyebrow": "04 — Testimonials",
+    "title": "What clients say",
+    "items": [
+      {
+        "quote": "PixelWave relaunched our online store and conversion grew 38% in a quarter. Transparent work, delivered on time.",
+        "name": "Elena Vorontsova",
+        "role": "CMO, Severny Put"
+      },
+      {
+        "quote": "They built a corporate portal with a client cabinet. The code and documentation quality stand out — easy to maintain.",
+        "name": "Dmitry Lazarev",
+        "role": "CTO, Delta Lab"
+      }
+    ]
+  },
+  "contact": {
+    "eyebrow": "05 — Contacts",
+    "title": "Let's discuss your project",
+    "lead": "Tell us about the task — we'll propose a solution and estimate the timeline. Free, no obligations.",
+    "infoTitle": "Get in touch",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "addressValue": "Russia · Vladivostok",
+    "responseTime": "We reply within 1 business day",
+    "form": {
+      "name": "Name",
+      "namePlaceholder": "What should we call you",
+      "email": "Email",
+      "emailPlaceholder": "you@company.com",
+      "phone": "Phone",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "company": "Company",
+      "companyPlaceholder": "Company name",
+      "service": "Service",
+      "servicePlaceholder": "Choose a service",
+      "budget": "Budget",
+      "budgetPlaceholder": "Choose a range",
+      "message": "Message",
+      "messagePlaceholder": "Briefly describe the task",
+      "optional": "optional",
+      "submit": "Send request",
+      "submitting": "Sending…",
+      "successTitle": "Request received",
+      "successText": "Thank you! We'll get back to you within 1 business day.",
+      "errorTitle": "Something went wrong",
+      "errorText": "Couldn't send the request. Please try again or email us.",
+      "again": "Send another"
+    },
+    "budgets": {
+      "UNDER_100K": "under ₽100,000",
+      "FROM_100K_TO_500K": "₽100,000 – 500,000",
+      "FROM_500K_TO_1M": "₽500,000 – 1,000,000",
+      "OVER_1M": "over ₽1,000,000"
+    },
+    "errors": {
+      "name_min": "At least 2 characters",
+      "name_max": "Too long",
+      "email_invalid": "Enter a valid email",
+      "phone_max": "Phone number too long",
+      "company_max": "Too long",
+      "message_min": "At least 10 characters",
+      "message_max": "Message too long"
+    }
+  },
+  "footer": {
+    "tagline": "Full-cycle digital agency. We turn ideas into working products.",
+    "nav": "Navigation",
+    "contactsTitle": "Contacts",
+    "rights": "All rights reserved."
+  }
+}

@@ -1,13 +1,8 @@
 allowBuilds:
-  '@prisma/engines': true
+  "@parcel/watcher": true
+  "@prisma/engines": true
+  "@swc/core": true
   esbuild: true
   prisma: true
   sharp: false
   unrs-resolver: false
-ignoredBuiltDependencies:
-  - sharp
-  - unrs-resolver
-onlyBuiltDependencies:
-  - '@prisma/engines'
-  - esbuild
-  - prisma
