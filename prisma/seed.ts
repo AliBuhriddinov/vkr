@@ -28,8 +28,6 @@ async function main(): Promise<void> {
   console.log("Сидинг тестовых данных PixelWave Web...");
 
 
-
-
   const admin = await prisma.user.upsert({
     where: { email: "admin@pixelwave.test" },
     update: {},
@@ -65,9 +63,7 @@ async function main(): Promise<void> {
 
   console.log(`  Пользователи: ${admin.email}, ${manager.email}, ${client.email}`);
 
-
   
-
   const services = [
     {
       slug: "web-development",
@@ -146,8 +142,6 @@ async function main(): Promise<void> {
   const support = await prisma.service.findUniqueOrThrow({ where: { slug: "support" } });
 
 
-
-
   const portfolio = [
     {
       slug: "severnyy-put",
@@ -196,9 +190,7 @@ async function main(): Promise<void> {
   }
   console.log(`  Кейсов портфолио: ${portfolio.length}`);
 
-
   
-
   const posts = [
     {
       slug: "delivery-in-6-weeks",
@@ -240,8 +232,6 @@ async function main(): Promise<void> {
     });
   }
   console.log(`  Публикаций блога: ${posts.length}`);
-
-
 
 
   // Чистим заявки и историю перед перезаливом — иначе при повторных запусках
