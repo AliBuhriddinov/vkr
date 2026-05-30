@@ -41,7 +41,7 @@ export async function POST(request: Request) {
         phone: emptyToNull(data.phone),
         company: emptyToNull(data.company),
         message: data.message,
-        budgetRange: data.budgetRange ?? null,
+        budgetRange: data.budgetRange ? data.budgetRange : null,
         serviceId,
         status: ApplicationStatus.NEW,
       },
