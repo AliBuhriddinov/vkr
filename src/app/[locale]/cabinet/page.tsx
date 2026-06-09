@@ -6,7 +6,6 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
-import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { ReviewForm } from "@/components/cabinet/review-form";
@@ -80,10 +79,10 @@ export default async function CabinetPage({
             <div className="mt-10 rounded-xl border border-border bg-card p-10 text-center">
               <p className="text-muted-foreground">{t("empty")}</p>
               <Button asChild className="mt-6">
-                <Link href="/">
+                <a href={`/${locale}#contacts`}>
                   {t("emptyCta")}
                   <ArrowRight className="size-4" />
-                </Link>
+                </a>
               </Button>
             </div>
           ) : (
