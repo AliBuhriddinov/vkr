@@ -10,6 +10,9 @@ import { Link } from "@/i18n/navigation";
 import { requireUser } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { ReviewForm } from "@/components/cabinet/review-form";
+import { ProfileForm } from "@/components/cabinet/profile-form";
+import { MyReviews } from "@/components/cabinet/my-reviews";
+import { AutoRefresh } from "@/components/auto-refresh";
 
 export async function generateMetadata({
   params,
@@ -32,6 +35,7 @@ export default async function CabinetPage({
 
   const t = await getTranslations("cabinet");
   const ts = await getTranslations("status");
+  const tsh = await getTranslations("statusHint");
   const tb = await getTranslations("contact.budgets");
 
   const applications = await prisma.application.findMany({
@@ -43,6 +47,15 @@ export default async function CabinetPage({
     },
   });
 
+  const [dbUser, myReviews] = await Promise.all([
+    prisma.user.findUnique({ where: { id: user.id }, select: { name: true } }),
+    prisma.testimonial.findMany({
+      where: { userId: user.id },
+      orderBy: { createdAt: "desc" },
+      select: { id: true, quote: true, authorRole: true, isPublished: true },
+    }),
+  ]);
+
   const dateOnly = new Intl.DateTimeFormat(locale, { dateStyle: "medium" });
   const dateTime = new Intl.DateTimeFormat(locale, {
     dateStyle: "medium",
@@ -51,11 +64,12 @@ export default async function CabinetPage({
 
   return (
     <>
+      <AutoRefresh />
       <Header />
       <main className="flex-1">
         <section className="mx-auto max-w-4xl px-6 py-16">
           <p className="text-sm text-muted-foreground">
-            {t("greeting", { name: user.name ?? user.email ?? "" })}
+            {t("greeting", { name: dbUser?.name ?? user.email ?? "" })}
           </p>
           <h1 className="mt-1 font-display text-3xl font-bold tracking-tight">
             {t("title")}
@@ -89,7 +103,7 @@ export default async function CabinetPage({
                         {app.budgetRange ? ` · ${tb(app.budgetRange)}` : ""}
                       </p>
                     </div>
-                    <StatusBadge status={app.status} label={ts(app.status)} />
+                    <StatusBadge status={app.status} label={ts(app.status)} hint={tsh(app.status)} />
                   </div>
 
                   <p className="mt-4 whitespace-pre-line text-sm text-foreground/90">
@@ -141,6 +155,15 @@ export default async function CabinetPage({
           )}
 
           <div className="mt-14 border-t border-border pt-10">
+            <ProfileForm initialName={dbUser?.name ?? ""} />
+          </div>
+
+          <div className="mt-14 border-t border-border pt-10">
+            {myReviews.length > 0 && (
+              <div className="mb-8">
+                <MyReviews reviews={myReviews} />
+              </div>
+            )}
             <ReviewForm />
           </div>
         </section>

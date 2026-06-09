@@ -12,6 +12,7 @@ import bcrypt from "bcryptjs";
 import { PrismaPg } from "@prisma/adapter-pg";
 import { PrismaClient } from "../src/generated/prisma/client";
 import { UserRole, ApplicationStatus, BudgetRange } from "../src/generated/prisma/enums";
+import blogContent from "./blog-content.json";
 
 const databaseUrl = process.env.DATABASE_URL;
 if (!databaseUrl) {
@@ -257,74 +258,32 @@ async function main(): Promise<void> {
   console.log(`  Кейсов портфолио: ${portfolio.length}`);
 
   
-  const posts = [
-    {
-      slug: "delivery-in-6-weeks",
-      title: "Как мы делаем веб-приложения за 6 недель",
-      excerpt:
-        "Рассказываем о методологии, инструментах и контрольных точках, которые позволяют запускать MVP за полтора месяца без потери качества.",
-      content:
-        "## Введение\n\nКлассический срок разработки MVP — 3–4 месяца. Мы умеем укладываться в 6 недель за счёт жёсткого scope-менеджмента, библиотеки готовых компонентов и автоматизации развёртывания...\n\n## Контрольные точки\n\n1. Неделя 1: исследования и прототип\n2. Неделя 2–3: схема БД и API\n3. Неделя 4–5: UI и интеграции\n4. Неделя 6: тестирование и запуск",
-      tags: ["методология", "MVP", "управление проектами"],
-      publishedAt: new Date("2026-03-10"),
-    },
-    {
-      slug: "5-mistakes-choosing-contractor",
-      title: "5 ошибок при выборе подрядчика на разработку",
-      excerpt:
-        "Что проверить перед подписанием договора, чтобы не получить незавершённый продукт и переплату.",
-      content:
-        "## 1. Отсутствие чёткого ТЗ\n\nЕсли подрядчик готов начать без подробного брифа — это красный флаг.\n\n## 2. Фиксированная цена без фиксированного объёма\n\n## 3. Отсутствие промежуточных демо\n\n## 4. Закрытый исходный код\n\n## 5. Отсутствие документации",
-      tags: ["заказ разработки", "договор", "управление рисками"],
-      publishedAt: new Date("2026-04-05"),
-    },
-    {
-      slug: "headless-cms-vs-wordpress-2026",
-      title: "Headless CMS vs WordPress: что выбрать в 2026",
-      excerpt:
-        "Сравниваем подходы по производительности, стоимости владения и удобству редактирования контента.",
-      content:
-        "В 2026 году выбор CMS уже не сводится к «брать WordPress по умолчанию». Headless-решения (Sanity, Strapi, Payload) выигрывают по скорости и масштабируемости...",
-      tags: ["CMS", "архитектура", "сравнение"],
-      publishedAt: new Date("2026-05-01"),
-    },
-  ];
-
-  const postsEn: Record<
-    string,
-    { titleEn: string; excerptEn: string; contentEn: string }
-  > = {
-    "delivery-in-6-weeks": {
-      titleEn: "How We Build Web Apps in 6 Weeks",
-      excerptEn:
-        "We share the methodology, tools, and checkpoints that let us launch an MVP in six weeks without compromising on quality.",
-      contentEn:
-        "## Introduction\n\nThe typical timeline for building an MVP is 3-4 months. We're able to do it in 6 weeks thanks to strict scope management, a library of ready-made components, and automated deployment...\n\n## Checkpoints\n\n1. Week 1: research and prototype\n2. Weeks 2-3: database schema and API\n3. Weeks 4-5: UI and integrations\n4. Week 6: testing and launch",
-    },
-    "5-mistakes-choosing-contractor": {
-      titleEn: "5 Mistakes to Avoid When Choosing a Development Contractor",
-      excerptEn:
-        "What to check before signing a contract so you don't end up with an unfinished product and an inflated bill.",
-      contentEn:
-        "## 1. No clear scope of work\n\nIf a contractor is ready to start without a detailed brief, that's a red flag.\n\n## 2. Fixed price without a fixed scope\n\n## 3. No interim demos\n\n## 4. Closed source code\n\n## 5. No documentation",
-    },
-    "headless-cms-vs-wordpress-2026": {
-      titleEn: "Headless CMS vs WordPress: What to Choose in 2026",
-      excerptEn:
-        "We compare the two approaches on performance, total cost of ownership, and ease of content editing.",
-      contentEn:
-        'In 2026, choosing a CMS no longer comes down to "just go with WordPress by default." Headless solutions (Sanity, Strapi, Payload) win out on speed and scalability...',
-    },
+  const blogDates: Record<string, Date> = {
+    "delivery-in-6-weeks": new Date("2026-03-10"),
+    "5-mistakes-choosing-contractor": new Date("2026-04-05"),
+    "headless-cms-vs-wordpress-2026": new Date("2026-05-01"),
+    "website-cost-breakdown": new Date("2026-05-20"),
+    "why-client-portal": new Date("2026-06-02"),
   };
-  for (const post of posts) {
-    const data = { ...post, ...postsEn[post.slug] };
+  for (const article of blogContent) {
+    const data = {
+      slug: article.slug,
+      title: article.titleRu,
+      titleEn: article.titleEn,
+      excerpt: article.excerptRu,
+      excerptEn: article.excerptEn,
+      content: article.contentRu,
+      contentEn: article.contentEn,
+      tags: article.tags,
+      publishedAt: blogDates[article.slug] ?? null,
+    };
     await prisma.blogPost.upsert({
-      where: { slug: post.slug },
+      where: { slug: article.slug },
       update: data,
       create: { ...data, authorId: admin.id },
     });
   }
-  console.log(`  Публикаций блога: ${posts.length}`);
+  console.log(`  Публикаций блога: ${blogContent.length}`);
 
   await prisma.testimonial.deleteMany();
   const testimonials = [

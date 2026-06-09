@@ -3,7 +3,8 @@
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { Moon, Sun } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, type MouseEvent } from "react";
+import { flushSync } from "react-dom";
 
 import { Button } from "@/components/ui/button";
 
@@ -16,13 +17,48 @@ export function ThemeToggle() {
 
   const isDark = resolvedTheme === "dark";
 
+  function toggle(event: MouseEvent<HTMLButtonElement>) {
+    const next = isDark ? "light" : "dark";
+    const doc = document as Document & {
+      startViewTransition?: (cb: () => void) => { ready: Promise<void> };
+    };
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    if (!doc.startViewTransition || reduceMotion) {
+      setTheme(next);
+      return;
+    }
+
+    const x = event.clientX;
+    const y = event.clientY;
+    const endRadius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y),
+    );
+
+    const transition = doc.startViewTransition(() => {
+      flushSync(() => setTheme(next));
+    });
+
+    transition.ready.then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${endRadius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: 480,
+          easing: "ease-in-out",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    });
+  }
+
   return (
-    <Button
-      variant="ghost"
-      size="icon"
-      aria-label={t("toggle")}
-      onClick={() => setTheme(isDark ? "light" : "dark")}
-    >
+    <Button variant="ghost" size="icon" aria-label={t("toggle")} onClick={toggle}>
       {mounted && isDark ? <Sun /> : <Moon />}
     </Button>
   );

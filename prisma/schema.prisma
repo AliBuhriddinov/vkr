@@ -43,6 +43,7 @@ model User {
   assignedApplications Application[]             @relation("ManagerAssignments")
   statusChanges        ApplicationStatusChange[]
   blogPosts            BlogPost[]
+  testimonials         Testimonial[]             @relation("ClientTestimonials")
 
   @@index([role])
 }
@@ -169,5 +170,9 @@ model Testimonial {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  userId String?
+  user   User?   @relation("ClientTestimonials", fields: [userId], references: [id], onDelete: SetNull)
+
   @@index([isPublished, order])
+  @@index([userId])
 }

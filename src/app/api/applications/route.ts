@@ -23,6 +23,9 @@ export async function POST(request: Request) {
 
   const data = parsed.data;
   const session = await auth();
+  if (!session?.user?.id) {
+    return NextResponse.json({ error: "auth_required" }, { status: 401 });
+  }
   const emptyToNull = (v?: string) => (v && v.length > 0 ? v : null);
 
   // Привязываем услугу только если такой id реально есть в каталоге.
@@ -45,7 +48,7 @@ export async function POST(request: Request) {
         message: data.message,
         budgetRange: data.budgetRange ? data.budgetRange : null,
         serviceId,
-        userId: session?.user?.id ?? null,
+        userId: session.user.id,
         status: ApplicationStatus.NEW,
       },
       select: { id: true },

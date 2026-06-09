@@ -34,11 +34,17 @@ export function DeleteWithUndo({
     if (row instanceof HTMLElement) row.style.display = "none";
 
     let undone = false;
-    const timer = setTimeout(async () => {
+    let settled = false;
+    // Удаление привязано к реальному закрытию тоста (а не к отдельному таймеру),
+    // поэтому при наведении тост и удаление паузятся вместе — отмена работает,
+    // пока тост виден.
+    const finalize = async () => {
+      if (settled) return;
+      settled = true;
       if (undone) return;
       await action();
       router.refresh();
-    }, 3000);
+    };
 
     toast(t("done", { name }), {
       duration: 3000,
@@ -46,10 +52,11 @@ export function DeleteWithUndo({
         label: t("undo"),
         onClick: () => {
           undone = true;
-          clearTimeout(timer);
           if (row instanceof HTMLElement) row.style.display = "";
         },
       },
+      onAutoClose: finalize,
+      onDismiss: finalize,
     });
   }
 

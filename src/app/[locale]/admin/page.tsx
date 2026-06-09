@@ -15,6 +15,7 @@ export default async function AdminDashboard({
   setRequestLocale(locale);
   const t = await getTranslations("admin.dashboard");
   const ts = await getTranslations("status");
+  const tsh = await getTranslations("statusHint");
 
   const [byStatus, totalApps, services, portfolio, blog] = await Promise.all([
     prisma.application.groupBy({ by: ["status"], _count: true }),
@@ -47,16 +48,18 @@ export default async function AdminDashboard({
         ))}
       </div>
 
-      <div className="mt-8 rounded-xl border border-border bg-card p-6">
+      <div className="mt-8">
         <h2 className="text-sm font-medium text-muted-foreground">{t("byStatus")}</h2>
-        <ul className="mt-4 space-y-3">
+        <div className="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-4">
           {STATUSES.map((status) => (
-            <li key={status} className="flex items-center justify-between">
-              <StatusBadge status={status} label={ts(status)} />
-              <span className="tabular-nums font-medium">{counts[status] ?? 0}</span>
-            </li>
+            <div key={status} className="rounded-xl border border-border bg-card p-5">
+              <p className="text-3xl font-bold tabular-nums">{counts[status] ?? 0}</p>
+              <div className="mt-2">
+                <StatusBadge status={status} label={ts(status)} hint={tsh(status)} />
+              </div>
+            </div>
           ))}
-        </ul>
+        </div>
       </div>
     </div>
   );

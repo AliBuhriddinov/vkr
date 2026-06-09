@@ -74,7 +74,32 @@ export async function submitReview(
   };
   const parsed = testimonialSchema.safeParse(data);
   if (!parsed.success) return { ok: false, error: "invalid" };
-  await prisma.testimonial.create({ data: parsed.data });
+  await prisma.testimonial.create({ data: { ...parsed.data, userId: user.id } });
+  revalidate(locale);
+  return { ok: true };
+}
+
+// Клиент редактирует свой отзыв — он снова уходит на модерацию.
+export async function updateReview(
+  locale: string,
+  id: string,
+  values: Record<string, unknown>,
+): Promise<Result> {
+  const user = await requireUser(locale);
+  const existing = await prisma.testimonial.findUnique({
+    where: { id },
+    select: { userId: true },
+  });
+  if (!existing || existing.userId !== user.id) return { ok: false, error: "invalid" };
+
+  const quote = String(values.quote ?? "").trim();
+  const authorRole = String(values.authorRole ?? "").trim();
+  if (!quote || !authorRole) return { ok: false, error: "required" };
+
+  await prisma.testimonial.update({
+    where: { id },
+    data: { quote, authorRole, isPublished: false, order: 0 },
+  });
   revalidate(locale);
   return { ok: true };
 }

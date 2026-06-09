@@ -42,7 +42,7 @@ export function AdminNav({
   const items = ITEMS;
 
   return (
-    <nav className="hidden w-52 shrink-0 md:block">
+    <nav className="hidden w-52 shrink-0 md:block md:sticky md:top-20 md:self-start">
       <ul className="space-y-1">
         {items.map((item) => {
           const active = item.exact

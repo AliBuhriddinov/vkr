@@ -7,7 +7,7 @@
   --radius: 0.75rem;
   color-scheme: light;
 
-  --background: #f7f8fa;
+  --background: #eceef3;
   --foreground: #10131a;
   --card: #ffffff;
   --card-foreground: #10131a;
@@ -93,12 +93,39 @@
 @layer base {
   * {
     border-color: var(--border);
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent) transparent;
+  }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
   }
   body {
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans), system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
+  }
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    background-color: color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+    border-radius: 9999px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: var(--muted-foreground);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
   }
 }
 
@@ -123,4 +150,17 @@
 .PhoneInputCountrySelect option {
   background-color: var(--popover);
   color: var(--popover-foreground);
+}
+
+/* Круговой reveal при смене темы (View Transitions API) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+::view-transition-old(root) {
+  z-index: 1;
 }

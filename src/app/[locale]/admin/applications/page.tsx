@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import { StatusBadge } from "@/components/status-badge";
 import { Button } from "@/components/ui/button";
 import { Link } from "@/i18n/navigation";
+import { AutoRefresh } from "@/components/auto-refresh";
 
 export default async function AdminApplicationsPage({
   params,
@@ -18,6 +19,7 @@ export default async function AdminApplicationsPage({
   const user = await requireRole(locale, ["ADMIN"]);
   const t = await getTranslations("admin.applications");
   const ts = await getTranslations("status");
+  const tsh = await getTranslations("statusHint");
 
   const [applications, me] = await Promise.all([
     prisma.application.findMany({
@@ -38,6 +40,7 @@ export default async function AdminApplicationsPage({
 
   return (
     <div>
+      <AutoRefresh />
       <h1 className="font-display text-2xl font-bold tracking-tight">{t("title")}</h1>
       <p className="mt-1 text-muted-foreground">{t("subtitle")}</p>
 
@@ -91,7 +94,7 @@ export default async function AdminApplicationsPage({
                     {app.service?.title ?? t("noService")}
                   </td>
                   <td className="px-4 py-3">
-                    <StatusBadge status={app.status} label={ts(app.status)} />
+                    <StatusBadge status={app.status} label={ts(app.status)} hint={tsh(app.status)} />
                   </td>
                   <td className="px-4 py-3 whitespace-nowrap text-muted-foreground">
                     {dateOnly.format(app.createdAt)}

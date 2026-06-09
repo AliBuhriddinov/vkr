@@ -67,7 +67,24 @@
     "noService": "No service",
     "created": "Created",
     "managerComment": "Comment",
-    "history": "Status history"
+    "history": "Status history",
+    "profile": {
+      "title": "Profile",
+      "name": "Name",
+      "saveName": "Save name",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "savePassword": "Change password",
+      "saving": "Saving…",
+      "nameSaved": "Name updated",
+      "passwordSaved": "Password changed",
+      "errors": {
+        "name_invalid": "Name must be between 2 and 100 characters",
+        "wrong_password": "Current password is incorrect",
+        "password_invalid": "Password must be at least 8 characters",
+        "server": "Something went wrong"
+      }
+    }
   },
   "review": {
     "title": "Leave a review",
@@ -77,13 +94,26 @@
     "rolePlaceholder": "e.g. CEO, Company",
     "submit": "Submit review",
     "submitting": "Submitting…",
-    "thanks": "Thank you! Your review was submitted."
+    "thanks": "Thank you! Your review was submitted.",
+    "myTitle": "My reviews",
+    "edit": "Edit",
+    "saveEdit": "Save changes",
+    "cancel": "Cancel",
+    "onModeration": "Under moderation",
+    "published": "Published",
+    "updated": "Review updated and sent for moderation"
   },
   "status": {
-    "NEW": "New",
+    "NEW": "Submitted",
     "IN_PROGRESS": "In progress",
     "DONE": "Done",
     "REJECTED": "Rejected"
+  },
+  "statusHint": {
+    "NEW": "The request has been received and is awaiting processing.",
+    "IN_PROGRESS": "The request is being worked on.",
+    "DONE": "Work on the request is complete.",
+    "REJECTED": "The request was declined."
   },
   "admin": {
     "title": "Administration",
@@ -325,6 +355,12 @@
     "address": "Address",
     "addressValue": "Russia · Vladivostok",
     "responseTime": "We reply within 1 business day",
+    "authRequired": {
+      "title": "Sign in to submit a request",
+      "text": "Requests are linked to your personal cabinet so you can track their status.",
+      "signIn": "Sign in",
+      "signUp": "Sign up"
+    },
     "form": {
       "name": "Name",
       "namePlaceholder": "What should we call you",

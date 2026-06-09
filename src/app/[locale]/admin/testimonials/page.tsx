@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { TestimonialAdminRow } from "@/components/admin/testimonial-admin-row";
 import { markSeen } from "@/lib/actions/notifications";
 import { deleteTestimonial, toggleTestimonial } from "@/lib/actions/testimonials";
+import { AutoRefresh } from "@/components/auto-refresh";
 
 export default async function AdminTestimonialsPage({
   params,
@@ -33,6 +34,7 @@ export default async function AdminTestimonialsPage({
 
   return (
     <div>
+      <AutoRefresh />
       <div className="flex items-center justify-between">
         <h1 className="font-display text-2xl font-bold tracking-tight">{t("title")}</h1>
         <Button asChild size="sm">

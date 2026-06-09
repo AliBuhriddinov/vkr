@@ -27,7 +27,13 @@ import { PhoneField } from "@/components/ui/phone-field";
 type ServiceOption = { id: string; title: string };
 type Status = "idle" | "success" | "error";
 
-export function ApplicationForm({ services }: { services: ServiceOption[] }) {
+export function ApplicationForm({
+  services,
+  user,
+}: {
+  services: ServiceOption[];
+  user?: { name: string; email: string };
+}) {
   const t = useTranslations("contact.form");
   const tb = useTranslations("contact.budgets");
   const te = useTranslations("contact.errors");
@@ -41,7 +47,13 @@ export function ApplicationForm({ services }: { services: ServiceOption[] }) {
     formState: { errors, isSubmitting },
   } = useForm<ApplicationInput>({
     resolver: zodResolver(applicationSchema),
-    defaultValues: { phone: "", serviceId: "", budgetRange: "" },
+    defaultValues: {
+      name: user?.name ?? "",
+      email: user?.email ?? "",
+      phone: "",
+      serviceId: "",
+      budgetRange: "",
+    },
   });
 
   async function onSubmit(values: ApplicationInput) {
@@ -92,6 +104,8 @@ export function ApplicationForm({ services }: { services: ServiceOption[] }) {
             {...register("name")}
             placeholder={t("namePlaceholder")}
             aria-invalid={!!errors.name}
+            readOnly={!!user}
+            className={user ? "bg-muted/60" : undefined}
           />
         </Field>
 
@@ -101,6 +115,8 @@ export function ApplicationForm({ services }: { services: ServiceOption[] }) {
             {...register("email")}
             placeholder={t("emailPlaceholder")}
             aria-invalid={!!errors.email}
+            readOnly={!!user}
+            className={user ? "bg-muted/60" : undefined}
           />
         </Field>
 

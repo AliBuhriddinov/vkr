@@ -19,6 +19,7 @@ export default async function AdminApplicationDetail({
   await requireRole(locale, ["ADMIN"]);
   const t = await getTranslations("admin.applications");
   const ts = await getTranslations("status");
+  const tsh = await getTranslations("statusHint");
   const tb = await getTranslations("contact.budgets");
 
   const application = await prisma.application.findUnique({
@@ -51,7 +52,11 @@ export default async function AdminApplicationDetail({
         <h1 className="font-display text-2xl font-bold tracking-tight">
           {t("detailTitle")}
         </h1>
-        <StatusBadge status={application.status} label={ts(application.status)} />
+        <StatusBadge
+          status={application.status}
+          label={ts(application.status)}
+          hint={tsh(application.status)}
+        />
       </div>
 
       <div className="mt-6 grid gap-6 md:grid-cols-2">

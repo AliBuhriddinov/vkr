@@ -1,14 +1,18 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
 
+import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { localize } from "@/lib/content";
 import { ApplicationForm } from "@/components/application-form";
 import { Reveal } from "@/components/motion/reveal";
+import { Link } from "@/i18n/navigation";
+import { Button } from "@/components/ui/button";
 
 export async function Contact() {
   const t = await getTranslations("contact");
   const locale = await getLocale();
+  const session = await auth();
   const rows = await prisma.service.findMany({
     where: { isActive: true },
     orderBy: { order: "asc" },
@@ -63,7 +67,32 @@ export async function Contact() {
         </Reveal>
 
         <Reveal delay={0.1} className="text-foreground">
-          <ApplicationForm services={services} />
+          {session?.user ? (
+            <ApplicationForm
+              services={services}
+              user={{
+                name: session.user.name ?? "",
+                email: session.user.email ?? "",
+              }}
+            />
+          ) : (
+            <div className="rounded-xl border border-border bg-card p-8 text-center">
+              <h3 className="font-display text-xl font-semibold">
+                {t("authRequired.title")}
+              </h3>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {t("authRequired.text")}
+              </p>
+              <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Button asChild>
+                  <Link href="/sign-up">{t("authRequired.signUp")}</Link>
+                </Button>
+                <Button asChild variant="outline">
+                  <Link href="/sign-in">{t("authRequired.signIn")}</Link>
+                </Button>
+              </div>
+            </div>
+          )}
         </Reveal>
       </div>
     </section>

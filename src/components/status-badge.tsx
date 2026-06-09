@@ -11,14 +11,18 @@ const STYLES: Record<ApplicationStatus, string> = {
 export function StatusBadge({
   status,
   label,
+  hint,
 }: {
   status: ApplicationStatus;
   label: string;
+  hint?: string;
 }) {
   return (
     <span
+      title={hint}
       className={cn(
         "inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-medium",
+        hint && "cursor-help",
         STYLES[status],
       )}
     >
