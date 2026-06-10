@@ -4,6 +4,7 @@ import { getLocale } from "next-intl/server";
 
 import { ThemeProvider } from "@/components/theme-provider";
 import { AppToaster } from "@/components/app-toaster";
+import { HeroBackground } from "@/components/hero-background";
 import "./globals.css";
 import "react-phone-number-input/style.css";
 
@@ -45,6 +46,7 @@ export default async function RootLayout({
       className={`${unbounded.variable} ${manrope.variable}`}
     >
       <body className="flex min-h-dvh flex-col">
+        <HeroBackground className="pointer-events-none fixed inset-0 -z-10 h-full w-full [mask-image:radial-gradient(ellipse_90%_80%_at_50%_25%,black,transparent_92%)]" />
         <ThemeProvider
           attribute="class"
           defaultTheme="dark"

@@ -34,22 +34,6 @@ export function Hero() {
 
   return (
     <section className="relative overflow-hidden">
-      <div className="grid-bg pointer-events-none absolute inset-0 opacity-[0.06] [mask-image:radial-gradient(ellipse_70%_60%_at_50%_0%,black,transparent)]" />
-
-      <motion.div
-        aria-hidden
-        className="pointer-events-none absolute left-1/2 top-[-10rem] h-[34rem] w-[60rem] -translate-x-1/2 rounded-full opacity-40 blur-[130px] dark:opacity-60"
-        style={{
-          background:
-            "radial-gradient(circle, var(--primary) 0%, transparent 60%)",
-        }}
-        animate={
-          reduce
-            ? undefined
-            : { scale: [1, 1.12, 1], opacity: [0.3, 0.45, 0.3] }
-        }
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
 
       <div className="relative mx-auto grid max-w-7xl gap-16 px-6 py-24 md:py-32 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <div>

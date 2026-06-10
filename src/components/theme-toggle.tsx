@@ -36,24 +36,33 @@ export function ThemeToggle() {
       Math.max(y, window.innerHeight - y),
     );
 
+    // Тёмная тема — «чернила»: в тёмную растекаются из кнопки (новый слой сверху,
+    // круг расширяется), обратно — втягиваются в кнопку (старый тёмный слой сверху,
+    // круг сжимается), открывая светлое.
+    const goingDark = next === "dark";
+    const root = document.documentElement;
+    root.setAttribute("data-theme-anim", goingDark ? "out" : "in");
+
     const transition = doc.startViewTransition(() => {
       flushSync(() => setTheme(next));
     });
 
     transition.ready.then(() => {
-      document.documentElement.animate(
+      const grow = [
+        `circle(0px at ${x}px ${y}px)`,
+        `circle(${endRadius}px at ${x}px ${y}px)`,
+      ];
+      const animation = root.animate(
+        { clipPath: goingDark ? grow : [...grow].reverse() },
         {
-          clipPath: [
-            `circle(0px at ${x}px ${y}px)`,
-            `circle(${endRadius}px at ${x}px ${y}px)`,
-          ],
-        },
-        {
-          duration: 480,
+          duration: 500,
           easing: "ease-in-out",
-          pseudoElement: "::view-transition-new(root)",
+          pseudoElement: goingDark
+            ? "::view-transition-new(root)"
+            : "::view-transition-old(root)",
         },
       );
+      animation.finished.finally(() => root.removeAttribute("data-theme-anim"));
     });
   }
 

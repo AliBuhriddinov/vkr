@@ -152,15 +152,23 @@
   color: var(--popover-foreground);
 }
 
-/* Круговой reveal при смене темы (View Transitions API) */
+/* Смена темы как «чернила» (View Transitions API) */
 ::view-transition-old(root),
 ::view-transition-new(root) {
   animation: none;
   mix-blend-mode: normal;
 }
+/* В тёмную: новый (тёмный) слой сверху, круг расширяется из кнопки */
 ::view-transition-new(root) {
   z-index: 9999;
 }
 ::view-transition-old(root) {
+  z-index: 1;
+}
+/* Обратно в светлую: старый (тёмный) слой сверху и втягивается в кнопку */
+html[data-theme-anim="in"]::view-transition-old(root) {
+  z-index: 9999;
+}
+html[data-theme-anim="in"]::view-transition-new(root) {
   z-index: 1;
 }
